@@ -1,5 +1,6 @@
 package com.future.scientists.classmate
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val adapter = FastItemAdapter<HomeworkItem>()
         adapter.onClickListener = { v, adapter, item, position ->
-            Toast.makeText(this, "${item.title}, $position", Toast.LENGTH_SHORT).show()
+            startActivity(
+                Intent(this, HomeworkEditActivity::class.java).putExtra(
+                    EXTRA_TITLE,
+                    item.title
+                )
+            )
             true
         }
 
