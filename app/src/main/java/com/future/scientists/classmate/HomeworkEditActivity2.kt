@@ -8,8 +8,6 @@ class HomeworkEditActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homework_edit2)
 
-
-
         val actionBar2 = supportActionBar
         actionBar2!!.title = "Домашнее задание 2"
         actionBar2.setDisplayHomeAsUpEnabled(true)

@@ -23,7 +23,7 @@ class HomeworkEditActivity : AppCompatActivity(){
         val button = findViewById<Button>(R.id.button)
         button.setOnClickListener {
             startActivity(
-                    Intent(this, HomeworkEditActivity2::class.java)
+                Intent(this, HomeworkEditActivity2::class.java)
             )
         }
     }
