@@ -1,28 +1,4 @@
-<?php
-require_once "../db/DBFunction.php";
-require_once "../models/User.php";
-require_once "../models/FieldValidator.php";
-$db = new DBFunction();
 
-    $uid = $_POST['uid'];
-    $firstName = $_POST['first_name'];
-    $middleName = $_POST['middle_name'];
-    $lastName = $_POST['last_name'];
-    $schoolNumber = $_POST["school_number"];
-    $schoolClass = $_POST['school_class'];
-
-    $user = new User($uid,$firstName, $middleName, $lastName, $schoolNumber, $schoolClass);
-    $db->authUser($user);
-    echo json_encode($user->getJsonData(), JSON_UNESCAPED_UNICODE);
-
-
-
-
-
-
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +8,8 @@ $db = new DBFunction();
     <title>Авторизация</title>
 </head>
 <body>
-<form method="POST">
+<h2>Авторизация</h2>
+<form method="POST" action="auth.php">
     <input type="text" name="uid" placeholder="uid"><br/>
     <input type="text" name="first_name" placeholder="Имя"><br/>
     <input type="text" name="last_name" placeholder="Фамилия"><br/>

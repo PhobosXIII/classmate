@@ -5,18 +5,10 @@ class ResponseMessage
     private $code;
     private $message;
     private $flag;
-    public static  $FLAG_SUCCESS = 0;
-    public static $FLAG_ERROR = 1;
-    public function sendMessage($code, $message, $flag)
+
+    public static function sendMessage($code, $message)
     {
-        if($flag== self::$FLAG_SUCCESS) {
-            $this->message = array("code" => $code, "message" => $message);
-            return json_encode($this->message);
-        }
-        else
-        {
-            $this->message = array("code" => $code, "message" => $message);
-            return json_encode($this->message);
-        }
+        $response = array("code"=>$code, "message"=>$message);
+        echo json_encode($response);
     }
 }
