@@ -15,20 +15,22 @@ class HomeworkEditActivity : AppCompatActivity(){
         val textView = findViewById<TextView>(R.id.tvTitle)
         textView.text = title
 
-        val actionBar = supportActionBar
-        actionBar!!.title = "Домашнее задание"
-        actionBar.setDisplayHomeAsUpEnabled(true)
-        actionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Домашнее задание"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val button = findViewById<Button>(R.id.button)
         button.setOnClickListener {
-            startActivity(
-                Intent(this, HomeworkEditActivity2::class.java)
-            )
+            startActivity(Intent(this, HomeworksActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra(
+                    EXTRA_TITLE,
+                    true
+            ))
+            finish()
         }
+
+
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+    override fun onSupportNavigateUp() : Boolean {
         onBackPressed()
         return true
     }
