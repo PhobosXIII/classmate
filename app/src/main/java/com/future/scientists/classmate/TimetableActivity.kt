@@ -2,6 +2,7 @@ package com.future.scientists.classmate
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,10 @@ class TimetableActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setActionBar(toolbar)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val timetable = listOf(
             TimetableItem("1.","Подг. русский","8:15-8:55","305"),
