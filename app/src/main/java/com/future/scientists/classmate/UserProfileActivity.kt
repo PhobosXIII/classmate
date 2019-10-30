@@ -10,6 +10,7 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
+//        getSharedPreferences()
     }
 
     fun startHomeworks(view: View) {

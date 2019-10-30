@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HomeworksActivity"></activity>
-        <activity android:name=".TimetableEditActivity"
-            android:label="Изменить">
+        <activity android:name=".HomeworksActivity"
+            android:label="Домашние задания"/>
+        <activity android:name=".UserProfileActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserProfileActivity"
-            android:label="Домашние задания"></activity>
+            android:name=".TimetableEditActivity"
+            android:label="Редактирование расписания"/>
         <activity
             android:name=".HomeworkEditActivity"
             android:label="Домашнее задание" />
