@@ -54,7 +54,7 @@ class HomeworksActivity : AppCompatActivity() {
         service.saveUser(User(UUID.randomUUID().toString(), "I", "R", "L", "123", "10"))
                 .enqueue(object : Callback<User> {
                     override fun onFailure(call: Call<User>, t: Throwable) {
-                        Log.e("Error", "", t)
+                        Log.e("ConnectionError", "", t)
                     }
 
                     override fun onResponse(call: Call<User>, response: Response<User>) {
