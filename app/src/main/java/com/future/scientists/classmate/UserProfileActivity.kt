@@ -44,22 +44,21 @@ class UserProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, TimetableActivity::class.java))
         }
 
-        val button2 = findViewById<Button>(R.id.buttonSchedule)
+        val button2 = findViewById<Button>(R.id.buttonHomework)
         button2.setOnClickListener {
             startActivity(Intent(this, HomeworksActivity::class.java))
-
         }
+    }
 
-        fun startHomeworks(view: View) {
-            startActivity(Intent(this, HomeworksActivity::class.java))
-        }
+    fun startHomeworks(view: View) {
+        startActivity(Intent(this, HomeworksActivity::class.java))
+    }
 
-        fun save(view: View) {
-            preferences.edit().putString(USER_FIRSTNAME, etName.text.toString()).apply()
-            preferences.edit().putString(USER_LASTNAME, etLastName.text.toString()).apply()
-            preferences.edit().putString(USER_SCHOOL, etSchool.text.toString()).apply()
-            preferences.edit().putString(USER_CLASS, etClass.text.toString()).apply()
-        }
+    fun save(view: View) {
+        preferences.edit().putString(USER_FIRSTNAME, etName.text.toString()).apply()
+        preferences.edit().putString(USER_LASTNAME, etLastName.text.toString()).apply()
+        preferences.edit().putString(USER_SCHOOL, etSchool.text.toString()).apply()
+        preferences.edit().putString(USER_CLASS, etClass.text.toString()).apply()
     }
 }
 
