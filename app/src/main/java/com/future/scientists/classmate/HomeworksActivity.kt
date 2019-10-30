@@ -8,24 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
-import retrofit2.Retrofit
-import android.util.Log
-import android.widget.EditText
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 
 class HomeworksActivity : AppCompatActivity() {
-
-    private lateinit var etName: EditText
-    private lateinit var etLastName: EditText
-    private lateinit var etSchool: EditText
-    private lateinit var etClass: EditText
-    private lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,44 +31,25 @@ class HomeworksActivity : AppCompatActivity() {
             true
         }
 
+        val button = findViewById<FloatingActionButton>(R.id.edit)
+        button.setOnClickListener {
+            startActivity(Intent(this, HomeworkEditActivity::class.java))
+        }
+
         val recyclerView = findViewById<RecyclerView>(R.id.rvHomeworks)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://w96076ih.beget.tech/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val service = retrofit.create<ClassmateService>(ClassmateService::class.java)
-        service.saveUser(User(UUID.randomUUID().toString(), "I", "R", "L", "123", "10"))
-                .enqueue(object : Callback<User> {
-                    override fun onFailure(call: Call<User>, t: Throwable) {
-                        Log.e("ConnectionError", "", t)
-                    }
-
-                    override fun onResponse(call: Call<User>, response: Response<User>) {
-                        val savedUser = response.body()
-                        Log.d("HomeworksActivity", ""+response.code())
-                        val homeworks = listOf(
-                            HomeworkItem("History", savedUser?.schoolClass ?: "nothing"),
-                            HomeworkItem("English", "Anything"),
-                            HomeworkItem("Maths", "2+2=4"),
-                            HomeworkItem("Biology", "Read about T-Rex"),
-                            HomeworkItem("History", "Create text about Caesar."),
-                            HomeworkItem("English", "Anything"),
-                            HomeworkItem("Maths", "2+2=4"),
-                            HomeworkItem("Biology", "Read about T-Rex"),
-                            HomeworkItem("History", "Create text about Caesar."),
-                            HomeworkItem("English", "Anything"),
-                            HomeworkItem("Maths", "2+2=4"),
-                            HomeworkItem("Biology", "Read about T-Rex")
-                        )
-                        adapter.setNewList(homeworks)
-                    }
-
-                })
+        val homeworks = listOf<HomeworkItem>(
+            HomeworkItem(" ", "Русский язык", "Упражнение 14, стр. 7", "30 Октября"),
+            HomeworkItem(" ", "Литература", "Изучить биографию А.С.Пушкина", "30 Октября"),
+            HomeworkItem(" ", "Алгебра", "№ 3.11 - 3.19", "30 Октября"),
+            HomeworkItem(" ", "Геометрия", "Выучить теорему Пифагора", "30 Октября"),
+            HomeworkItem(" ", "Английский язык", "Выучить слова. Ex 9, p.5", "30 Октября"),
+            HomeworkItem(" ", "История", "Сделать таблицу о Наполеоне", "30 Октября")
+        )
+        adapter.setNewList(homeworks)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
