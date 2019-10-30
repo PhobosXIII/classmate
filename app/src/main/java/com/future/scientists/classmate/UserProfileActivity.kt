@@ -50,7 +50,7 @@ class UserProfileActivity : AppCompatActivity() {
     }
 }
 
-const val PREFS_FILE = "classmate"
+const val PREFS_FILE = "classmate_user"
 const val USER_ID = "USER_ID"
 const val USER_FIRSTNAME = "USER_FIRSTNAME"
 const val USER_LASTNAME = "USER_LASTNAME"
