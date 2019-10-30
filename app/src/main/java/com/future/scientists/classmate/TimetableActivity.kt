@@ -21,10 +21,6 @@ class TimetableActivity : AppCompatActivity() {
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setActionBar(toolbar)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-
         val timetable = listOf(
             TimetableItem("1.","Подг. русский","8:15-8:55","305"),
             TimetableItem("2.","Физ-ра","9:05-9:45","-"),
