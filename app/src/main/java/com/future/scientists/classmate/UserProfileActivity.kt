@@ -6,7 +6,9 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class UserProfileActivity : AppCompatActivity() {
@@ -28,25 +30,36 @@ class UserProfileActivity : AppCompatActivity() {
 
         preferences = getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
 
-        if(preferences.contains(USER_ID)){
+        if (preferences.contains(USER_ID)) {
             etName.setText(preferences.getString(USER_FIRSTNAME, ""))
             etLastName.setText(preferences.getString(USER_LASTNAME, ""))
             etSchool.setText(preferences.getString(USER_SCHOOL, ""))
             etClass.setText(preferences.getString(USER_CLASS, ""))
-        } else{
+        } else {
             preferences.edit().putString(USER_ID, UUID.randomUUID().toString()).apply()
         }
-    }
 
-    fun startHomeworks(view: View) {
-        startActivity(Intent(this, HomeworksActivity::class.java))
-    }
+        val button = findViewById<Button>(R.id.buttonSchedule)
+        button.setOnClickListener {
+            startActivity(Intent(this, TimetableActivity::class.java))
+        }
 
-    fun save(view: View) {
-        preferences.edit().putString(USER_FIRSTNAME, etName.text.toString()).apply()
-        preferences.edit().putString(USER_LASTNAME, etLastName.text.toString()).apply()
-        preferences.edit().putString(USER_SCHOOL, etSchool.text.toString()).apply()
-        preferences.edit().putString(USER_CLASS, etClass.text.toString()).apply()
+        val button2 = findViewById<Button>(R.id.buttonSchedule)
+        button2.setOnClickListener {
+            startActivity(Intent(this, HomeworksActivity::class.java))
+
+        }
+
+        fun startHomeworks(view: View) {
+            startActivity(Intent(this, HomeworksActivity::class.java))
+        }
+
+        fun save(view: View) {
+            preferences.edit().putString(USER_FIRSTNAME, etName.text.toString()).apply()
+            preferences.edit().putString(USER_LASTNAME, etLastName.text.toString()).apply()
+            preferences.edit().putString(USER_SCHOOL, etSchool.text.toString()).apply()
+            preferences.edit().putString(USER_CLASS, etClass.text.toString()).apply()
+        }
     }
 }
 

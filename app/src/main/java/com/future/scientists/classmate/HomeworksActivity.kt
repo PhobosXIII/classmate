@@ -31,7 +31,7 @@ class HomeworksActivity : AppCompatActivity() {
             true
         }
 
-        val button = findViewById<FloatingActionButton>(R.id.edit)
+        val button = findViewById<FloatingActionButton>(R.id.add)
         button.setOnClickListener {
             startActivity(Intent(this, HomeworkEditActivity::class.java))
         }
