@@ -5,6 +5,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ClassmateService {
-    @POST("auth/auth.php")
+    @POST("api/auth/auth.php")
     fun saveUser(@Body user: User): Call<User>
 }

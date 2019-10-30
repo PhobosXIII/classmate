@@ -46,7 +46,7 @@ class HomeworksActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://host1792107.hostland.pro/api/")
+            .baseUrl("http://w96076ih.beget.tech/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -59,6 +59,7 @@ class HomeworksActivity : AppCompatActivity() {
 
                     override fun onResponse(call: Call<User>, response: Response<User>) {
                         val savedUser = response.body()
+                        Log.d("HomeworksActivity", ""+response.code())
                         val homeworks = listOf(
                             HomeworkItem("History", savedUser?.schoolClass ?: "nothing"),
                             HomeworkItem("English", "Anything"),

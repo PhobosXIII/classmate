@@ -1,7 +1,7 @@
 package com.future.scientists.classmate
 
 data class User(
-    val id: String,
+    val uid: String,
     val firstName: String,
     val middleName: String,
     val lastName: String,
