@@ -2,6 +2,7 @@ package com.future.scientists.classmate
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,11 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
+
 class HomeworksActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homeworks)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val adapter = FastItemAdapter<HomeworkItem>()
         adapter.onClickListener = { v, adapter, item, position ->
             startActivity(
@@ -44,5 +49,15 @@ class HomeworksActivity : AppCompatActivity() {
             HomeworkItem(" ", "История", "Сделать таблицу о Наполеоне", "30 Октября")
         )
         adapter.setNewList(homeworks)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

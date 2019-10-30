@@ -531,3 +531,90 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*
+if has uid - тянем пользователя
+else - тянем справочники и создаем пользователя
+*/
+
+---------------------------------------------------------------
+-- выбрать данные пользователя
+select u.`_id`,
+       u.`uid` text,
+       u.`first_name`,
+       u.`middle_name`,
+       u.`last_name`,
+       u.`school_link_class_id`,
+       s.`name` as school_name,
+       c.`name` as class_name
+from user u,
+     school_link_class slc,
+     school s,
+     class c
+where u.uid = #uid
+  and u.school_link_class_id = slc.school_link_class_id
+  AND slc.school_id = s.school_id
+  AND slc.class_id = c.class_id;
+
+---------------------------------------------------------------
+-- TODO хранить локально?
+-- старт приложения
+SELECT school_id,
+       name
+FROM school;
+
+SELECT class_id,
+       name
+FROM class;
+
+-- json на создание пользователя
+{
+  'uid': '',
+  'first_name' : '',
+  'middle_name' : '',
+  'last_name' : '',
+  'school_id' : '',
+  'class_id' : ''
+};
+
+-- json ответ на любой запрос
+{
+    code : 0,
+    message : '',
+    #`USER_DATA` (school_link_class_id)
+};
+
+-- создать пользователя
+select scl.school_link_class_id
+into l_school_link_class_id
+from school_link_class slc
+where slc.school_id= #school_id
+  AND slc.class_is = #class_id;
+
+INSERT INTO user(`uid`, `first_name`, `middle_name`, `last_name`, `school_link_class_id`);
+VALUES(#uid, #first_name, #middle_name, #last_name, l_school_link_class_id);
+
+---------------------------------------------------------------
+-- получить рассписание (school_link_class_id)
+
+-- сохранить рассписание (school_link_class_id)
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+-- получить домашку (school_link_class_id)
+{
+  'school_link_class_id'  : '',
+  'stamp' : ''
+};
+
+select hw.*
+from timetable tt,
+     homework hw,
+where tt.school_link_class_id = #school_link_class_id
+  AND tt.temi > stamp
+  AND tt.time < stamp + 1
+  and hw.timetable_id = tt.timetable_id;
+
+-- сохранить домашку (school_link_class_id)
+
+---------------------------------------------------------------
