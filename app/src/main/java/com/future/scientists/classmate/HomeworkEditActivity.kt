@@ -3,7 +3,9 @@ package com.future.scientists.classmate
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
@@ -18,16 +20,13 @@ class HomeworkEditActivity : AppCompatActivity(){
         supportActionBar?.title = "Домашнее задание"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val datePicker = findViewById<DatePicker>(R.id.dp)
         val button = findViewById<Button>(R.id.button)
         button.setOnClickListener {
-            startActivity(Intent(this, HomeworksActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra(
-                    EXTRA_TITLE,
-                    true
-            ))
+           val msg = "${datePicker.dayOfMonth}.${datePicker.month}.${datePicker.year}"
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             finish()
         }
-
-
     }
 
     override fun onSupportNavigateUp() : Boolean {

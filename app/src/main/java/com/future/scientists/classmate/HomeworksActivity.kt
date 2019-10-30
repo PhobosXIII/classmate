@@ -1,6 +1,7 @@
 package com.future.scientists.classmate
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import retrofit2.Retrofit
 import android.util.Log
+import android.widget.EditText
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +20,12 @@ import java.util.*
 
 
 class HomeworksActivity : AppCompatActivity() {
+
+    private lateinit var etName: EditText
+    private lateinit var etLastName: EditText
+    private lateinit var etSchool: EditText
+    private lateinit var etClass: EditText
+    private lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
