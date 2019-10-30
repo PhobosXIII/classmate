@@ -12,22 +12,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".HomeworksActivity"
             android:label="Домашние задания"/>
-        <activity android:name=".UserProfileActivity">
 
+        <activity android:name=".UserProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".TimetableEditActivity"
             android:label="Редактирование расписания"/>
+
         <activity
             android:name=".HomeworkEditActivity"
             android:label="Домашнее задание" />
+
+        <activity
+            android:name=".TimetableActivity"
+            android:label="Расписание"/>
+
     </application>
 
 </manifest>

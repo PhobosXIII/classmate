@@ -17,8 +17,5 @@ class TimetableEditActivity : AppCompatActivity() {
         val edTitle = findViewById<TextInputEditText>(R.id.edTitle)
         val edCabinet = findViewById<TextInputEditText>(R.id.edCabinet)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-
-
-
     }
 }
