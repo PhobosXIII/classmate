@@ -18,4 +18,9 @@ class TimetableEditActivity : AppCompatActivity() {
         val edCabinet = findViewById<TextInputEditText>(R.id.edCabinet)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
     }
+
+    override fun onSupportNavigateUp() : Boolean {
+        onBackPressed()
+        return true
+    }
 }

@@ -15,6 +15,7 @@ class TimetableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timetable)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val adapter = FastItemAdapter<TimetableItem>()
         adapter.onClickListener = { v, adapter, item, position ->
             startActivity(
@@ -44,5 +45,10 @@ class TimetableActivity : AppCompatActivity() {
             TimetableItem("5.","История","11:45-12:25","107")
         )
         adapter.setNewList(timetable)
+    }
+
+    override fun onSupportNavigateUp() : Boolean {
+        onBackPressed()
+        return true
     }
 }
