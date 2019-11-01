@@ -1,26 +1,33 @@
 package com.future.scientists.classmate
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
 class TimetableActivity : AppCompatActivity() {
-
+    val adapter = FastItemAdapter<TimetableItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timetable)
-        val adapter = FastItemAdapter<TimetableItem>()
+
+        val preferences = getSharedPreferences(PREF_TIMETABLE, Context.MODE_PRIVATE)
+        val gson = Gson()
+
         adapter.onClickListener = { v, adapter, item, position ->
             startActivity(
                 Intent(this, TimetableEditActivity::class.java).putExtra(
-                    EXTRA_TITLE,
-                    item.title
+                    EXTRA_TIMETABLE_DATA,
+                    //Тут баг не те данные передаются в тайтл время в время тайтл
+                    putData(item.number, item.title, item.time, item.cabinet)
                 )
             )
             true
@@ -35,14 +42,37 @@ class TimetableActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
+        val list = preferences.all
+        val jsonList : MutableList<TimetableItem> = mutableListOf()
+        list.forEach()
+        {
+            jsonList.add(gson.fromJson(it.value.toString(), TimetableItem::class.java))
+        }
 
-        val timetable = listOf(
-            TimetableItem("1.","Подг. русский","8:15-8:55","305"),
-            TimetableItem("2.","Физ-ра","9:05-9:45","-"),
-            TimetableItem("3.","География","10:00-10:40","304"),
-            TimetableItem("4.","Физика","10:55-11:35","202"),
-            TimetableItem("5.","История","11:45-12:25","107")
-        )
-        adapter.setNewList(timetable)
+        adapter.setNewList(jsonList)
     }
+
+    override fun onStart() {
+        super.onStart()
+        val preferences = getSharedPreferences(PREF_TIMETABLE, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val list = preferences.all
+        val jsonList : MutableList<TimetableItem> = mutableListOf()
+        list.forEach()
+        {
+            jsonList.add(gson.fromJson(it.value.toString(), TimetableItem::class.java))
+        }
+        adapter.setNewList(jsonList)
+    }
+    fun putData(num : String,  time : String,  title : String,  cabinet : String) : Bundle
+    {
+        val bundle = Bundle()
+        bundle.putString("number", num)
+        bundle.putString("time", time)
+        bundle.putString("title", title)
+        bundle.putString("cabinet", cabinet)
+        return bundle
+    }
+
 }
+const val EXTRA_TIMETABLE_DATA = "com.future.scientists.classmate.timetable"

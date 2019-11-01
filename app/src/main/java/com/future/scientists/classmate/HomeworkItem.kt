@@ -22,6 +22,10 @@ class HomeworkItem(
         return ViewHolder(v)
     }
 
+    override fun toString(): String {
+        return "HomeworkItem(id='$id', title='$title', description='$description', data='$data')"
+    }
+
     class ViewHolder(view: View) : FastAdapter.ViewHolder<HomeworkItem>(view) {
         private val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
         private val tvDescription = itemView.findViewById<TextView>(R.id.tvDescription)
@@ -40,4 +44,5 @@ class HomeworkItem(
         }
 
     }
+
 }

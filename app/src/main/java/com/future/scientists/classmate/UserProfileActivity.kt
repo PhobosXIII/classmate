@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import java.util.*
 
@@ -15,6 +16,7 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var etLastName: EditText
     private lateinit var etSchool: EditText
     private lateinit var etClass: EditText
+    private lateinit var btnTimetable : Button
     private lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +27,7 @@ class UserProfileActivity : AppCompatActivity() {
         etLastName = findViewById(R.id.userSName)
         etSchool = findViewById(R.id.userSchool)
         etClass = findViewById(R.id.userClass)
-
+        btnTimetable = findViewById(R.id.buttonSchedule)
         preferences = getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
 
         if(preferences.contains(USER_ID)){
@@ -36,6 +38,9 @@ class UserProfileActivity : AppCompatActivity() {
         } else{
             preferences.edit().putString(USER_ID, UUID.randomUUID().toString()).apply()
         }
+        btnTimetable.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this, TimetableActivity::class.java))
+        })
     }
 
     fun startHomeworks(view: View) {
@@ -48,6 +53,7 @@ class UserProfileActivity : AppCompatActivity() {
         preferences.edit().putString(USER_SCHOOL, etSchool.text.toString()).apply()
         preferences.edit().putString(USER_CLASS, etClass.text.toString()).apply()
     }
+
 }
 
 const val PREFS_FILE = "classmate_user"
