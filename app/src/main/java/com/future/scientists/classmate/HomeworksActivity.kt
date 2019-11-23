@@ -1,7 +1,7 @@
 package com.future.scientists.classmate
 
+import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
-
+import org.json.JSONObject
 
 class HomeworksActivity : AppCompatActivity() {
+    private val adapter = FastItemAdapter<HomeworkItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,13 +21,9 @@ class HomeworksActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val adapter = FastItemAdapter<HomeworkItem>()
-        adapter.onClickListener = { v, adapter, item, position ->
+        adapter.onClickListener = { _, _, item, _ ->
             startActivity(
-                Intent(this, HomeworkEditActivity::class.java).putExtra(
-                    EXTRA_TITLE,
-                    item.title
-                )
+                Intent(this, HomeworkEditActivity::class.java).putExtra(EXTRA_ID, item.id)
             )
             true
         }
@@ -40,20 +37,25 @@ class HomeworksActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
+    }
 
-        val homeworks = listOf<HomeworkItem>(
-            HomeworkItem(" ", "Русский язык", "Упражнение 14, стр. 7", "30 Октября"),
-            HomeworkItem(" ", "Литература", "Изучить биографию А.С.Пушкина", "30 Октября"),
-            HomeworkItem(" ", "Алгебра", "№ 3.11 - 3.19", "30 Октября"),
-            HomeworkItem(" ", "Геометрия", "Выучить теорему Пифагора", "30 Октября"),
-            HomeworkItem(" ", "Английский язык", "Выучить слова. Ex 9, p.5", "30 Октября"),
-            HomeworkItem(" ", "История", "Сделать таблицу о Наполеоне", "30 Октября")
-        )
+    override fun onResume() {
+        super.onResume()
+        val preferences = getSharedPreferences(PREFS_FILE_HOMEWORK, Context.MODE_PRIVATE)
+        val homeworks = preferences.all.values.map {
+            val jsonObject = JSONObject(it.toString())
+            HomeworkItem(
+                id = jsonObject.getString("id"),
+                title = jsonObject.getString("title"),
+                description = jsonObject.getString("description"),
+                date = jsonObject.getString("date")
+            )
+        }
         adapter.setNewList(homeworks)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true

@@ -2,7 +2,6 @@ package com.future.scientists.classmate
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,3 +51,5 @@ class TimetableActivity : AppCompatActivity() {
         return true
     }
 }
+
+const val EXTRA_TITLE = "EXTRA_TITLE"

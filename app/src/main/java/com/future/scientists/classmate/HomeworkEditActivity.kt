@@ -1,13 +1,18 @@
 package com.future.scientists.classmate
 
 import android.content.Context
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.content.SharedPreferences
-import android.widget.*
+import android.os.Bundle
+import android.widget.Button
+import android.widget.DatePicker
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import org.json.JSONObject
+import java.util.*
 
-class HomeworkEditActivity : AppCompatActivity(){
+class HomeworkEditActivity : AppCompatActivity() {
 
+    private var id: String? = null
     private lateinit var tvTitle: EditText
     private lateinit var tvDesc: EditText
     private lateinit var dp: DatePicker
@@ -16,31 +21,43 @@ class HomeworkEditActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homework_edit)
-        val title = intent?.extras?.getString(EXTRA_TITLE)
-        val textView = findViewById<TextView>(R.id.tvTitle)
-        textView.text = title
 
-        preferences = getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
+        tvTitle = findViewById(R.id.tvTitle)
+        tvDesc = findViewById(R.id.tvDesc)
+        dp = findViewById(R.id.dp)
+
+        preferences = getSharedPreferences(PREFS_FILE_HOMEWORK, Context.MODE_PRIVATE)
+        id = intent?.extras?.getString(EXTRA_ID)
+        preferences.getString(id, null)?.let {
+            val jsonObject = JSONObject(it)
+            tvTitle.setText(jsonObject.getString("title"))
+            tvDesc.setText(jsonObject.getString("description"))
+            val date = jsonObject.getString("date").split(", ")
+            dp.updateDate(date[2].toInt(), date[1].toInt(), date[0].toInt())
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //val datePicker = findViewById<DatePicker>(R.id.dp)
         val button = findViewById<Button>(R.id.button)
-         button.setOnClickListener {
-             preferences.edit().putString(HOMEWORK_TITLE, tvTitle.text.toString()).apply()
-             preferences.edit().putString(HOMEWORK_DESCRIPTION, tvDesc.text.toString()).apply()
-             preferences.edit().putString(HOMEWORK_DATEPICKER, "${dp.dayOfMonth}, ${dp.month}, ${dp.year}").apply()
-             finish()
+        button.setOnClickListener {
+            if (id === null) id = UUID.randomUUID().toString()
+            val json = JSONObject()
+                .put("id", id)
+                .put("title", tvTitle.text.toString())
+                .put("description", tvDesc.text.toString())
+                .put("date", "${dp.dayOfMonth}, ${dp.month}, ${dp.year}")
+                .toString()
+
+            preferences.edit().putString(id, json).apply()
+            finish()
         }
     }
 
-    override fun onSupportNavigateUp() : Boolean {
+    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 }
 
-const val EXTRA_TITLE = "com.future.scientists.classmate.EXTRA_TITLE"
-const val HOMEWORK_TITLE = "HOMEWORK_TITLE"
-const val HOMEWORK_DESCRIPTION = "HOMEWORK_DESCRIPTION"
-const val HOMEWORK_DATEPICKER = "HOMEWORK_DATEPICKER"
+const val PREFS_FILE_HOMEWORK = "classmate_homework"
+const val EXTRA_ID = "com.future.scientists.classmate.EXTRA_ID"
